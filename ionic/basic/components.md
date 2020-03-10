@@ -101,3 +101,37 @@ Lesz benne egy ilyen rész:
 })
 ```
 Na a `selector:` rész lesz amit a html-be írsz.
+
+### Változók belepakolása
+A használt HTML fájlba ahol meghívod, nézzen ki így pl:
+```
+<app-kislabda
+    value1="little cat"
+    value2="big cat"
+  ></app-kislabda>
+```
+
+Majd a `kislabda.component.ts` fájl pedig így:
+```
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-kislabda',
+  templateUrl: './kislabda.component.html',
+  styleUrls: ['./kislabda.component.scss'],
+})
+export class KislabdaComponent implements OnInit {
+
+  @Input() value1: string;
+  @Input() value2: string;
+
+  constructor() {
+    this.value1;
+    this.value2;
+  }
+
+  ngOnInit() {}
+
+}
+```
+Annyi hogy importálni kell az `Input`-ot felül, majd az export-ba pedig már látod mivan.
