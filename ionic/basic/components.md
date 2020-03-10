@@ -91,3 +91,13 @@ Kész is a szenvedés része. Most pedig a HTML fájlba használjuk őket így:
 <app-my-component3></app-my-component>
 <app-my-component4></app-my-component>
 ```
+Ezeket a neveket innen derítheted ki/írhatod át: Nyisd meg a komponensed, pl: `my-component.component.ts`
+Lesz benne egy ilyen rész:
+```
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+  styleUrls: ['./my-component.component.scss'],
+})
+```
+Na a `selector:` rész lesz amit a html-be írsz.
