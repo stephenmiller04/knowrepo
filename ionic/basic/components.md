@@ -135,3 +135,57 @@ export class KislabdaComponent implements OnInit {
 }
 ```
 Annyi hogy importálni kell az `Input`-ot felül, majd az export-ba pedig már látod mivan.
+
+### Külső funkció meghívása templaten belül
+Tegyük fel hogy neked van egy modalod amibe van egy template és abból akarod bezárni a modalt, itt a megoldás kéremszépen: (De amúgy ez érvényes bármire funkcióra)
+
+Na van egy funkciód pl egy modal page-en ami felugrik ha meghívod és benne van a templated:
+```
+public async closeModal() {
+  await this.modalController.dismiss();
+}
+```
+
+A fenti a funkciód, a `multimodal.page.ts`-ben:
+```
+import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
+@Component({
+  selector: 'app-multimodal',
+  templateUrl: './multimodal.page.html',
+  styleUrls: ['./multimodal.page.scss'],
+})
+export class MultimodalPage implements OnInit {
+
+  constructor(private modalController: ModalController) {
+    this.closeModal();
+  }
+
+  ngOnInit() {
+  }
+
+  public async closeModal() {
+    await this.modalController.dismiss();
+  }
+
+}
+```
+
+Ezután a fentiek alapján van egy komponensed, pl: `send.component.ts`, abba importálod azt amiből akarod kihasználni a funkciót:
+```
+import { MultimodalPage } from '../../multimodal/multimodal.page';
+```
+
+Azután a `export class SendComponent implements OnInit {}`-ba a `constructor` így nézzen ki:
+```
+constructor(private MultimodalPage: MultimodalPage) {
+  this.MultimodalPage.closeModal();
+}
+```
+
+Tehát adjuk hozzá itt a használni kívánt funkciót.
+A HTML része a komponensnek amiből használjuk a másik funkciót az így nézzen ki meghívva:
+```
+<ion-button (click)="MultimodalPage.closeModal()">Gomba</ion-button>
+```
